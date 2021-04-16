@@ -269,7 +269,7 @@ The pretraining dataset is 170GB+ and takes 15+ hours to download. The BookCorpu
 Users are welcome to download BookCorpus from other sources to match our accuracy, or repeatedly try our script until the required number of files are downloaded by running the following:
 `bash scripts/data_download.sh wiki_books`
 
-Note: Not using BookCorpus can potentially change final accuracy on a few downstream tasks.
+Note: Ensure a complete Wikipedia download. If in any case, the download breaks, remove the output file `wikicorpus_en.xml.bz2`  and start again. If a partially downloaded file exists, the script assumes successful download which causes the extraction to fail. Not using BookCorpus can potentially change final accuracy on a few downstream tasks.
 
 4. Download the pretrained models from NGC.
 
@@ -1090,7 +1090,7 @@ Our results were obtained by running the `scripts/finetune_inference_benchmark.s
 
 ###### Fine-tuning inference performance for SQuAD v1.1 on DGX A100  40GB
 
-Our results were obtained by running the `scripts/finetune_inference_benchmark.sh` training script in the TensorFlow 20.06-py3 NGC container on NVIDIA DGX A100 with 1x V100 40GB GPUs. Performance numbers (throughput in sentences per second and latency in milliseconds) were averaged from 1024 iterations. Latency is computed as the time taken for a batch to process as they are fed in one after another in the model ie no pipelining.
+Our results were obtained by running the `scripts/finetune_inference_benchmark.sh` training script in the TensorFlow 20.06-py3 NGC container on NVIDIA DGX A100 with 1x A100 40GB GPUs. Performance numbers (throughput in sentences per second and latency in milliseconds) were averaged from 1024 iterations. Latency is computed as the time taken for a batch to process as they are fed in one after another in the model ie no pipelining.
 
 | Model | Sequence Length | Batch Size | Precision | Throughput-Average(sent/sec) | Latency-Average(ms) | Latency-90%(ms) | Latency-95%(ms) | Latency-99%(ms) |
 |-------|-----------------|------------|-----------|------------------------------|---------------------|-----------------|-----------------|-----------------|

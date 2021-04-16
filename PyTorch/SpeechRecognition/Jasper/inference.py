@@ -49,7 +49,7 @@ def get_parser():
                         help='Eval this many steps for every worker')
     parser.add_argument('--warmup_steps', default=0, type=int,
                         help='Burn-in period before measuring latencies')
-    parser.add_argument('--model_config', type=str,
+    parser.add_argument('--model_config', type=str, required=True,
                         help='Relative model config path given dataset folder')
     parser.add_argument('--dataset_dir', type=str,
                         help='Absolute path to dataset folder')
@@ -212,8 +212,11 @@ def main():
 
     # dataset
     if args.transcribe_wav or args.transcribe_filelist:
-        assert not use_dali, "DALI is not supported for a single audio"
-        assert not args.transcribe_filelist
+
+        if use_dali:
+            print("DALI supported only with input .json files; disabling")
+            use_dali = False
+
         assert not args.pad_to_max_duration
         assert not (args.transcribe_wav and args.transcribe_filelist)
 
@@ -321,7 +324,7 @@ def main():
                 if feat_proc is not None:
                     feats, feat_lens = feat_proc(feats, feat_lens)
             else:
-                batch = [t.cuda(non_blocking=True) for t in batch]
+                batch = [t.to(device, non_blocking=True) for t in batch]
                 audio, audio_lens, txt, txt_lens = batch
                 feats, feat_lens = feat_proc(audio, audio_lens)
 
