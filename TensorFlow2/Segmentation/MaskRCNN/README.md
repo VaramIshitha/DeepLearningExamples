@@ -241,7 +241,7 @@ To train your model using mixed or TF32 precision with Tensor Cores or using FP3
     The following script will download the pre-trained weights to `/weights`.
 
     ```bash
-    bash scripts/download_weights.sh /weights
+    python scripts/download_weights.py --save_dir=/weights
     ```
 
 6. Start training.
@@ -323,7 +323,6 @@ NVIDIA implementation of MastRCNN for TensorFlow 2.x
 Runtime:
   MODE                                    One of supported execution modes:
                                                 train - run in training mode
-                                                train_and_eval - run training followed by evaluation
                                                 eval - run evaluation on eval data split
                                                 infer - run inference on eval data split
   --data_dir DIR                          Input directory containing the dataset (default: /data)
